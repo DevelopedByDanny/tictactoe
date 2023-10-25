@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class TicTacToeModel {
-    private StringProperty welcomeText;
+    private final StringProperty welcomeText;
 
     public String getDisplayWinner() {
         return displayWinner.get();
