@@ -14,23 +14,16 @@
     <Label alignment="TOP_CENTER" fx:id="welcomeLabel"/>
     <Label alignment="CENTER" fx:id="turnLabel"/>
     <Button text="Start" onAction="#onClickStartGame"/>
-
-    <HBox alignment="CENTER">
-        <VBox>
-            <Button fx:id="button00" onAction="#onButtonAction" minHeight="50" minWidth="50"/>
-            <Button fx:id="button01" onAction="#onButtonAction" minHeight="50" minWidth="50"/>
-            <Button fx:id="button02" onAction="#onButtonAction" minHeight="50" minWidth="50"/>
-        </VBox>
-        <VBox>
-            <Button fx:id="button10" onAction="#onButtonAction" minHeight="50" minWidth="50"/>
-            <Button fx:id="button11" onAction="#onButtonAction" minHeight="50" minWidth="50"/>
-            <Button fx:id="button12" onAction="#onButtonAction" minHeight="50" minWidth="50"/>
-        </VBox>
-        <VBox>
-            <Button fx:id="button20" onAction="#onButtonAction" minHeight="50" minWidth="50"/>
-            <Button fx:id="button21" onAction="#onButtonAction" minHeight="50" minWidth="50"/>
-            <Button fx:id="button22" onAction="#onButtonAction" minHeight="50" minWidth="50"/>
-        </VBox>
-    </HBox>
+    <GridPane alignment="CENTER">
+        <Button fx:id="button00" onAction="#onButtonAction" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <Button fx:id="button01" onAction="#onButtonAction" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        <Button fx:id="button02" onAction="#onButtonAction" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+        <Button fx:id="button10" onAction="#onButtonAction" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <Button fx:id="button11" onAction="#onButtonAction" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+        <Button fx:id="button12" onAction="#onButtonAction" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+        <Button fx:id="button20" onAction="#onButtonAction" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <Button fx:id="button21" onAction="#onButtonAction" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+        <Button fx:id="button22" onAction="#onButtonAction" GridPane.rowIndex="2" GridPane.columnIndex="2" />
+    </GridPane>
     <Label fx:id="winner" />
 </VBox>
