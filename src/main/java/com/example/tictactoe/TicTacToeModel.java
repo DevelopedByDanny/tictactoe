@@ -2,16 +2,19 @@ package com.example.tictactoe;
 
 import javafx.beans.property.*;
 
+import java.util.Arrays;
+
+import static com.example.tictactoe.GameMode.*;
 import static com.example.tictactoe.Marker.*;
 
 public class TicTacToeModel {
     public final StringProperty welcomeText;
     private final StringProperty winner;
-    private StringProperty playerTurn;
-    private StringProperty score;
+    private final StringProperty playerTurn;
+    private final StringProperty score;
     private final StringProperty[][] board;
-    private boolean xTurn;
     private Marker marker;
+    private GameMode gameMode;
 
     public boolean isBoardDisabled() {
         return boardDisabled.get();
@@ -25,15 +28,15 @@ public class TicTacToeModel {
         this.boardDisabled.set(boardDisabled);
     }
 
-    private SimpleBooleanProperty boardDisabled = new SimpleBooleanProperty(this, "boardDisabled");
+    private final SimpleBooleanProperty boardDisabled = new SimpleBooleanProperty(this, "boardDisabled");
 
 
     public TicTacToeModel() {
+        gameMode = HUMAN;
         marker = X;
-        playerTurn = new SimpleStringProperty();
+        playerTurn = new SimpleStringProperty("Player " + getMarker() + " turn");
         score = new SimpleStringProperty();
         winner = new SimpleStringProperty("");
-        xTurn = true;
         boardDisabled.set(true);
         board = new StringProperty[3][3];
         welcomeText = new SimpleStringProperty("Tic Tac Toe");
@@ -64,9 +67,6 @@ public class TicTacToeModel {
         this.score.set(score);
     }
 
-    public void setxTurn(boolean xTurn) {
-        this.xTurn = xTurn;
-    }
 
     public StringProperty winnerProperty() {
         return winner;
@@ -76,22 +76,16 @@ public class TicTacToeModel {
         return winner.get();
     }
 
-    public void setWinner(String winner) {
-        this.winner.set("Player " + winner + " wins!");
+    public void setResult(String result) {
+        if (result.equals("Tied")) winner.set("Tied");
+        else winner.set("Player " + result + " wins!");
     }
 
     public void resetWinner() {
         this.winner.set("");
     }
 
-    public boolean isxTurn() {
-        return xTurn;
-    }
 
-    public String toggleTurn() {
-        this.xTurn = !xTurn;
-        return isxTurn() ? "O" : "X";
-    }
 
     public String getMarker() {
         return marker.toString();
@@ -133,51 +127,71 @@ public class TicTacToeModel {
         for (int i = 0; i < 3; i++) {
             // Check rows
             if (!board[i][0].get().isEmpty() && board[i][0].get().equals(board[i][1].get()) && board[i][1].get().equals(board[i][2].get())) {
-                setWinner(board[i][0].get());
+                setResult(board[i][0].get());
                 return true;
             }
             // Check columns
             if (!board[0][i].get().isEmpty() && board[0][i].get().equals(board[1][i].get()) && board[1][i].get().equals(board[2][i].get())) {
-                setWinner(board[0][i].get());
+                setResult(board[0][i].get());
                 return true;
             }
         }
         // Check diagonals
         if (!board[0][0].get().isEmpty() && board[0][0].get().equals(board[1][1].get()) && board[1][1].get().equals(board[2][2].get())
                 || !board[0][2].get().isEmpty() && board[0][2].get().equals(board[1][1].get()) && board[1][1].get().equals(board[2][0].get())) {
-            setWinner(board[1][1].get());
+            setResult(board[1][1].get());
+            return true;
+        }
+        if (checkForTie()){
+            setResult("Tied");
             return true;
         }
         return false;
+    }
+
+    private boolean checkForTie() {
+        return Arrays.stream(board)
+                .flatMap(Arrays::stream)
+                .noneMatch(cell -> cell != null && cell.get().isEmpty());
     }
 
     public void startGame() {
         resetWinner();
         resetBoard();
 
-        xTurn = true;
         boardDisabled.set(false);
-
+    }
+    public void endGame(){
 
     }
 
-    public void playVsHuman() {
-        startGame();
+    public void setModeToHuman() {
+        gameMode = HUMAN;
+    }
+    public void setModeToEasy(){
+        gameMode = EASY;
+    }
+    public void setModeToHard() {
+        gameMode = HARD;
     }
 
     public void placeMarkerOnTheBoard(String buttonId) {
         var row = Integer.parseInt(buttonId.substring(6, 7));
         var col = Integer.parseInt(buttonId.substring(7));
-//        board[row][col].set(toggleTurn());
-        board[row][col].set(getMarker());
-        toggleMarker();
+        board[row][col].set(getAndToggleMarker());
 
+        if (!checkForTie()) {
+            var move = Computer.move(board, gameMode, getMarker());
+            move.ifPresent(moveRecord -> board[moveRecord.row()][moveRecord.col()].set(getAndToggleMarker()));
+        }
         boardDisabled.set(checkForWin());
     }
 
-    private void toggleMarker() {
+    private String getAndToggleMarker() {
+        var currentMarker = getMarker();
         if (marker.equals(X)) marker = O;
         else marker = X;
+        return currentMarker;
     }
 
     private void resetBoard() {
@@ -187,7 +201,4 @@ public class TicTacToeModel {
             }
         }
     }
-}
-
-record BoardUpdate(String marker, int row, int col) {
 }

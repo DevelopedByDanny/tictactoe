@@ -56,21 +56,17 @@ public class TicTacToeController {
         if (button.getText().isEmpty()) {
             gameModel.placeMarkerOnTheBoard(button.getId());
         }
-
-//        if (button.getText().isEmpty()) {
-//            button.setText(gameModel.isxTurn() ? "X" : "O");
-//            gameModel.toggleTurn();
-//        }
-//        gameModel.checkForWin();
     }
 
     public void onClickStartGame(ActionEvent actionEvent) {
-        gameModel.playVsHuman();
+        gameModel.startGame();
     }
 
     public void onPlayEasyComputer(ActionEvent actionEvent) {
+        gameModel.setModeToEasy();
     }
 
     public void onPlayHardComputer(ActionEvent actionEvent) {
+        gameModel.setModeToHard();
     }
 }
