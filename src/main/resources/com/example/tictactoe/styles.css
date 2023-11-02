@@ -4,13 +4,14 @@
 }
 
 .button {
-    -fx-min-height: 50;
-    -fx-min-width: 50;
+    -fx-min-height: 100;
+    -fx-min-width: 100;
     -fx-font-size: 24px;
     -fx-background-color: #3c3c3c;
     -fx-text-fill: #ffffff;
     -fx-border-color: #ffffff;
     -fx-border-width: 1px;
+    -fx-border-insets: -1;
 }
 
 .label {
@@ -20,5 +21,23 @@
 }
 
 .gridpane, .vbox {
-    -fx-spacing: 10px;
+    /*-fx-spacing: 10px;*/
+}
+#right .button {
+    -fx-alignment:  "CENTER";
+    -fx-font-size: 20;
+    -fx-min-height: 50;
+}
+#right {
+    -fx-padding: 20;
+}
+#center {
+    -fx-padding: 20;
+}
+#header {
+    -fx-background-color: #a17e7e;
+    -fx-min-height: 200;
+}
+#welcomeLabel {
+    -fx-font-size: 50;
 }
