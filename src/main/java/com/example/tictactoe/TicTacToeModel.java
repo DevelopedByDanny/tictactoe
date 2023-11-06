@@ -171,6 +171,7 @@ public class TicTacToeModel {
     public void setModeToEasy(){
         gameMode = EASY;
     }
+
     public void setModeToHard() {
         gameMode = HARD;
     }
@@ -180,7 +181,7 @@ public class TicTacToeModel {
         var col = Integer.parseInt(buttonId.substring(7));
         board[row][col].set(getAndToggleMarker());
 
-        if (!checkForTie()) {
+        if (!checkForWin()) {
             var move = Computer.move(board, gameMode, getMarker());
             move.ifPresent(moveRecord -> board[moveRecord.row()][moveRecord.col()].set(getAndToggleMarker()));
         }
