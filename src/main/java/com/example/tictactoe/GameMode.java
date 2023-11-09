@@ -1,7 +1,7 @@
 package com.example.tictactoe;
 
 public enum GameMode {
-    HUMAN,
+    VS,
     EASY,
     HARD
 }

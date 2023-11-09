@@ -9,6 +9,7 @@ import static com.example.tictactoe.GameMode.*;
 public class Computer {
     public static Optional<MoveRecord> move(StringProperty[][] board, GameMode gameMode, String marker) {
 
+        //TODO implement player interface in some way
         if (gameMode == EASY) {
             return Optional.of(easyMove(board));
         }

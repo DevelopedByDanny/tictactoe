@@ -12,9 +12,11 @@ public class TicTacToeModel {
     private final StringProperty winner;
     private final StringProperty playerTurn;
     private final StringProperty score;
-    private final StringProperty[][] board;
-    private Marker marker;
     private GameMode gameMode;
+    private final StringProperty[][] board;
+    private final SimpleBooleanProperty boardDisabled;
+    private Marker marker;
+
 
     public boolean isBoardDisabled() {
         return boardDisabled.get();
@@ -28,16 +30,14 @@ public class TicTacToeModel {
         this.boardDisabled.set(boardDisabled);
     }
 
-    private final SimpleBooleanProperty boardDisabled = new SimpleBooleanProperty(this, "boardDisabled");
-
 
     public TicTacToeModel() {
-        gameMode = HUMAN;
+        gameMode = VS;
         marker = X;
         playerTurn = new SimpleStringProperty("Player " + getMarker() + " turn");
         score = new SimpleStringProperty();
         winner = new SimpleStringProperty("");
-        boardDisabled.set(true);
+        boardDisabled = new SimpleBooleanProperty(true);
         board = new StringProperty[3][3];
         welcomeText = new SimpleStringProperty("Tic Tac Toe");
         setBoard();
@@ -67,7 +67,6 @@ public class TicTacToeModel {
         this.score.set(score);
     }
 
-
     public StringProperty winnerProperty() {
         return winner;
     }
@@ -85,8 +84,6 @@ public class TicTacToeModel {
         this.winner.set("");
     }
 
-
-
     public String getMarker() {
         return marker.toString();
     }
@@ -101,6 +98,7 @@ public class TicTacToeModel {
 
     public void setWelcomeText(String welcomeText) {
         this.welcomeText.set(welcomeText);
+
     }
 
     public StringProperty[][] getBoard() {
@@ -150,9 +148,7 @@ public class TicTacToeModel {
     }
 
     private boolean checkForTie() {
-        return Arrays.stream(board)
-                .flatMap(Arrays::stream)
-                .noneMatch(cell -> cell != null && cell.get().isEmpty());
+        return Arrays.stream(board).flatMap(Arrays::stream).noneMatch(cell -> cell != null && cell.get().isEmpty());
     }
 
     public void startGame() {
@@ -164,9 +160,8 @@ public class TicTacToeModel {
     public void endGame(){
 
     }
-
     public void setModeToHuman() {
-        gameMode = HUMAN;
+        gameMode = VS;
     }
     public void setModeToEasy(){
         gameMode = EASY;
@@ -179,16 +174,16 @@ public class TicTacToeModel {
     public void placeMarkerOnTheBoard(String buttonId) {
         var row = Integer.parseInt(buttonId.substring(6, 7));
         var col = Integer.parseInt(buttonId.substring(7));
-        board[row][col].set(getAndToggleMarker());
+        board[row][col].set(getAndThenToggleMarker());
 
         if (!checkForWin()) {
             var move = Computer.move(board, gameMode, getMarker());
-            move.ifPresent(moveRecord -> board[moveRecord.row()][moveRecord.col()].set(getAndToggleMarker()));
+            move.ifPresent(moveRecord -> board[moveRecord.row()][moveRecord.col()].set(getAndThenToggleMarker()));
         }
         boardDisabled.set(checkForWin());
     }
 
-    private String getAndToggleMarker() {
+    private String getAndThenToggleMarker() {
         var currentMarker = getMarker();
         if (marker.equals(X)) marker = O;
         else marker = X;
@@ -197,9 +192,9 @@ public class TicTacToeModel {
 
     private void resetBoard() {
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                board[i][j].set("");
-            }
+            board[i][0].set("");
+            board[i][1].set("");
+            board[i][2].set("");
         }
     }
 }
