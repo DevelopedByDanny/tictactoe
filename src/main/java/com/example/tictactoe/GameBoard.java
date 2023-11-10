@@ -58,10 +58,9 @@ public class GameBoard {
         }
     }
 
-    public boolean isGameOver() {
+    public boolean checkForWin() {
         if (checkRowsAndColumns()) return disableBoard();
         else if (checkDiagonals()) return disableBoard();
-        else if (checkForTie()) return disableBoard();
         else return false;
     }
 
@@ -104,7 +103,7 @@ public class GameBoard {
         }
         return false;
     }
-    private boolean checkForTie() {
+    public boolean checkForTie() {
         return Arrays.stream(board).flatMap(Arrays::stream).noneMatch(cell -> cell != null && cell.get().isEmpty());
     }
 

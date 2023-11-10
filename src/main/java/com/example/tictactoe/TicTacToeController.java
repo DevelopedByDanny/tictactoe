@@ -9,8 +9,8 @@ public class TicTacToeController {
     @FXML
     private Label welcomeLabel;
     public Label winner;
-    public Label playerTurn;
-    public Label score;
+    public Label playerOneScore;
+    public Label playerTwoScore;
     public Label turnLabel;
 
     private final TicTacToeModel gameModel = new TicTacToeModel();
@@ -27,11 +27,10 @@ public class TicTacToeController {
     public void initialize() {
         welcomeLabel.textProperty().bindBidirectional(gameModel.welcomeTextProperty());
         winner.textProperty().bindBidirectional(gameModel.winnerProperty());
-        playerTurn.textProperty().bindBidirectional(gameModel.playerTurnProperty());
-        score.textProperty().bindBidirectional(gameModel.scoreProperty());
+        playerOneScore.textProperty().bindBidirectional(gameModel.playerOneScoreLabelProperty());
+        playerTwoScore.textProperty().bindBidirectional(gameModel.playerTwoScoreLabelProperty());
 
         bindButtonsToDisabledProperty();
-//        bindTheButtonsToBoard();
         bindTheButtonsToGameBoard();
     }
 

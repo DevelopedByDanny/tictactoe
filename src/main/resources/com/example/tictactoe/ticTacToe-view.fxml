@@ -63,8 +63,8 @@
     <right>
         <VBox alignment="CENTER" fx:id="right" spacing="10">
             <VBox>
-                <Label fx:id="playerTurn" alignment="CENTER"/>
-                <Label fx:id="score" alignment="CENTER"/>
+                <Label fx:id="playerOneScore" alignment="CENTER"/>
+                <Label fx:id="playerTwoScore" alignment="CENTER"/>
             </VBox>
             <HBox>
                 <Button text="Start" onAction="#onClickStartGame"/>

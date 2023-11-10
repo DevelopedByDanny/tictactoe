@@ -2,19 +2,15 @@ package com.example.tictactoe;
 
 import javafx.beans.property.*;
 
-import java.util.Arrays;
-
-import static com.example.tictactoe.GameMode.*;
-import static com.example.tictactoe.Marker.*;
-
 public class TicTacToeModel {
     //region Fields
     public final StringProperty welcomeText;
     private final Player playerOne;
     private final ComputerClass playerTwo;
+
     private final StringProperty winner;
-    private final StringProperty playerTurn;
-    private final StringProperty score;
+    private final StringProperty playerOneScoreLabel;
+    private final StringProperty playerTwoScoreLabel;
     GameBoard gameBoard;
 
     //endregion
@@ -23,36 +19,42 @@ public class TicTacToeModel {
         gameBoard = new GameBoard();
         playerOne = new Player();
         playerTwo = new ComputerClass();
-        playerTurn = new SimpleStringProperty("Player X turn");
-        score = new SimpleStringProperty();
+        playerOneScoreLabel = new SimpleStringProperty("Player X Score: ");
+        playerTwoScoreLabel = new SimpleStringProperty("Player O Score: ");
         winner = new SimpleStringProperty("");
         welcomeText = new SimpleStringProperty("Tic Tac Toe");
     }
 
     //region Getters and Setters
-
-
-
-    public StringProperty playerTurnProperty() {
-        return playerTurn;
+    public StringProperty playerOneScoreLabelProperty() {
+        return playerOneScoreLabel;
     }
 
-
-
-    public StringProperty scoreProperty() {
-        return score;
+    public StringProperty playerTwoScoreLabelProperty() {
+        return playerTwoScoreLabel;
     }
-
 
     public StringProperty winnerProperty() {
         return winner;
     }
 
 
-    public void setResult(String result) {
-        if (result.equals("Tied")) winner.set("Tied");
-        else winner.set("Player " + result + " wins!");
+    public String getWinner() {
+        return winner.get();
     }
+
+    public void setWinner(String winner) {
+        this.winner.set(winner);
+    }
+
+    public void setPlayerOneScoreLabel(int score) {
+        this.playerOneScoreLabel.set("Player X Score: " + score);
+    }
+
+    public void setPlayerTwoScoreLabel(int score) {
+        this.playerTwoScoreLabel.set("Player O Score: " + score);
+    }
+
 
     public StringProperty welcomeTextProperty() {
         return welcomeText;
@@ -62,33 +64,38 @@ public class TicTacToeModel {
         this.welcomeText.set(welcomeText);
     }
 
-
     //endregion
-
-
-
 
     //region Methods
     public void startGame() {
         gameBoard.PrepBoard();
+        setWinner("");
     }
 
     public void endGame() {
 
 
     }
+
     public void placeMarkerOnTheBoard(String buttonId) {
-
-        //new game-board logic
         gameBoard.placeMarker(playerOne.makeMove(buttonId));
-
-        if (!gameBoard.isGameOver()) {
+        if (!gameBoard.checkForWin() && !gameBoard.checkForTie()) {
             gameBoard.placeMarker(playerTwo.makeMove(gameBoard.getBoard()));
+            if (gameBoard.checkForWin()) {
+                setPlayerTwoScoreLabel(playerTwo.incrementScore());
+                setWinner("Player " + playerTwo.getMarker().name() + " wins!");
+            }
+        } else {
+            if (gameBoard.checkForWin()) {
+                setPlayerOneScoreLabel(playerOne.incrementScore());
+                setWinner("Player " + playerOne.getMarker().name() + " wins!");
+            }
         }
 
-        gameBoard.setBoardDisabled(gameBoard.isGameOver());
-
+        if (gameBoard.checkForTie()) {
+            setWinner("This is a Tie!");
+            gameBoard.setBoardDisabled(true);
+        }
     }
-
     //endregion
 }
