@@ -55,7 +55,6 @@ public class TicTacToeModel {
         this.playerTwoScoreLabel.set("Player O Score: " + score);
     }
 
-
     public StringProperty welcomeTextProperty() {
         return welcomeText;
     }
@@ -74,6 +73,8 @@ public class TicTacToeModel {
 
     public void endGame() {
 
+        playerOne.setScore(0);
+        playerTwo.setScore(0);
 
     }
 
