@@ -58,7 +58,7 @@ public class GameBoard {
         }
     }
 
-    public boolean checkForWin() {
+    public boolean isGameOver() {
         if (checkRowsAndColumns()) return disableBoard();
         else if (checkDiagonals()) return disableBoard();
         else if (checkForTie()) return disableBoard();
@@ -112,13 +112,17 @@ public class GameBoard {
         return board;
     }
 
-    public void resetBoard() {
+    public void PrepBoard() {
+        resetBoard();
+        enableBoard();
+    }
+
+    private void resetBoard() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 board[i][j].set("");
             }
         }
-        enableBoard();
     }
 
 }

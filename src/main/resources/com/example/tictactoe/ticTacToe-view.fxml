@@ -62,13 +62,17 @@
     </center>
     <right>
         <VBox alignment="CENTER" fx:id="right" spacing="10">
+            <VBox>
+                <Label fx:id="playerTurn" alignment="CENTER"/>
+                <Label fx:id="score" alignment="CENTER"/>
+            </VBox>
             <HBox>
                 <Button text="Start" onAction="#onClickStartGame"/>
                 <Button text="End Game" onAction="#onClickResetMatch"/>
             </HBox>
             <HBox>
-                <Button text="Easy" onAction="#onPlayEasyComputer"/>
-                <Button text="Hard" onAction="#onPlayHardComputer"/>
+                <Button text="Easy" onAction="#onClickEasy"/>
+                <Button text="Hard" onAction="#onClickHard"/>
             </HBox>
         </VBox>
     </right>
@@ -76,8 +80,6 @@
     <bottom>
         <VBox alignment="CENTER">
             <Label fx:id="winner" alignment="CENTER"/>
-            <Label fx:id="playerTurn" alignment="CENTER"/>
-            <Label fx:id="score" alignment="CENTER"/>
         </VBox>
     </bottom>
 </BorderPane>

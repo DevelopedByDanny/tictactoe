@@ -59,17 +59,6 @@ public class TicTacToeController {
         button22.textProperty().bindBidirectional(gameModel.gameBoard.stringProperty(2, 2));
     }
 
-    private void bindTheButtonsToBoard() {
-        button00.textProperty().bindBidirectional(gameModel.stringProperty(0, 0));
-        button01.textProperty().bindBidirectional(gameModel.stringProperty(0, 1));
-        button02.textProperty().bindBidirectional(gameModel.stringProperty(0, 2));
-        button10.textProperty().bindBidirectional(gameModel.stringProperty(1, 0));
-        button11.textProperty().bindBidirectional(gameModel.stringProperty(1, 1));
-        button12.textProperty().bindBidirectional(gameModel.stringProperty(1, 2));
-        button20.textProperty().bindBidirectional(gameModel.stringProperty(2, 0));
-        button21.textProperty().bindBidirectional(gameModel.stringProperty(2, 1));
-        button22.textProperty().bindBidirectional(gameModel.stringProperty(2, 2));
-    }
 
 
     public void onButtonAction(ActionEvent actionEvent) {
@@ -83,14 +72,13 @@ public class TicTacToeController {
         gameModel.startGame();
     }
 
-    public void onPlayEasyComputer(ActionEvent actionEvent) {
-        gameModel.setModeToEasy();
+    public void onClickEasy(ActionEvent actionEvent) {
     }
 
-    public void onPlayHardComputer(ActionEvent actionEvent) {
-        gameModel.setModeToHard();
+    public void onClickHard(ActionEvent actionEvent) {
     }
 
     public void onClickResetMatch(ActionEvent actionEvent) {
+        gameModel.endGame();
     }
 }
