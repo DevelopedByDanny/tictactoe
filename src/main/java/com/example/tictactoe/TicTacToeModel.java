@@ -8,7 +8,10 @@ import static com.example.tictactoe.GameMode.*;
 import static com.example.tictactoe.Marker.*;
 
 public class TicTacToeModel {
+    //region Fields
     public final StringProperty welcomeText;
+    private final Player playerOne;
+    private final ComputerClass playerTwo;
     private final StringProperty winner;
     private final StringProperty playerTurn;
     private final StringProperty score;
@@ -16,10 +19,32 @@ public class TicTacToeModel {
     private final StringProperty[][] board;
     private final SimpleBooleanProperty boardDisabled;
     private Marker marker;
+    GameBoard gameBoard;
 
+    //endregion
 
+    public TicTacToeModel() {
+        gameBoard = new GameBoard();
+        gameMode = VS;
+        marker = X;
+        playerTurn = new SimpleStringProperty("Player " + getMarker() + " turn");
+        score = new SimpleStringProperty();
+        winner = new SimpleStringProperty("");
+        boardDisabled = new SimpleBooleanProperty(true);
+        board = new StringProperty[3][3];
+        welcomeText = new SimpleStringProperty("Tic Tac Toe");
+        setBoard();
+        playerOne = new Player();
+        playerTwo = new ComputerClass();
+    }
+
+    //region Getters and Setters
     public boolean isBoardDisabled() {
         return boardDisabled.get();
+    }
+
+    public void setModeToHuman() {
+        gameMode = VS;
     }
 
     public SimpleBooleanProperty boardDisabledProperty() {
@@ -30,18 +55,6 @@ public class TicTacToeModel {
         this.boardDisabled.set(boardDisabled);
     }
 
-
-    public TicTacToeModel() {
-        gameMode = VS;
-        marker = X;
-        playerTurn = new SimpleStringProperty("Player " + getMarker() + " turn");
-        score = new SimpleStringProperty();
-        winner = new SimpleStringProperty("");
-        boardDisabled = new SimpleBooleanProperty(true);
-        board = new StringProperty[3][3];
-        welcomeText = new SimpleStringProperty("Tic Tac Toe");
-        setBoard();
-    }
 
     public String getPlayerTurn() {
         return playerTurn.get();
@@ -105,6 +118,11 @@ public class TicTacToeModel {
         return board;
     }
 
+    public StringProperty stringProperty(int row, int col) {
+        return board[row][col];
+    }
+    //endregion
+
     private void setBoard() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -113,14 +131,8 @@ public class TicTacToeModel {
         }
     }
 
-    public StringProperty stringProperty(int row, int col) {
-        return board[row][col];
-    }
 
-    public void setBoard(int row, int col) {
-        board[row][col].set("X");
-    }
-
+    //region Methods
     public boolean checkForWin() {
         for (int i = 0; i < 3; i++) {
             // Check rows
@@ -140,7 +152,7 @@ public class TicTacToeModel {
             setResult(board[1][1].get());
             return true;
         }
-        if (checkForTie()){
+        if (checkForTie()) {
             setResult("Tied");
             return true;
         }
@@ -153,17 +165,15 @@ public class TicTacToeModel {
 
     public void startGame() {
         resetWinner();
-        resetBoard();
+        gameBoard.resetBoard();
+    }
 
-        boardDisabled.set(false);
-    }
-    public void endGame(){
+    public void endGame() {
+
 
     }
-    public void setModeToHuman() {
-        gameMode = VS;
-    }
-    public void setModeToEasy(){
+
+    public void setModeToEasy() {
         gameMode = EASY;
     }
 
@@ -172,15 +182,27 @@ public class TicTacToeModel {
     }
 
     public void placeMarkerOnTheBoard(String buttonId) {
-        var row = Integer.parseInt(buttonId.substring(6, 7));
-        var col = Integer.parseInt(buttonId.substring(7));
-        board[row][col].set(getAndThenToggleMarker());
 
-        if (!checkForWin()) {
-            var move = Computer.move(board, gameMode, getMarker());
-            move.ifPresent(moveRecord -> board[moveRecord.row()][moveRecord.col()].set(getAndThenToggleMarker()));
+        //new game-board logic
+        gameBoard.placeMarker(playerOne.makeMove(buttonId));
+
+        if (!gameBoard.checkForWin()) {
+            gameBoard.placeMarker(playerTwo.makeMove( gameBoard.getBoard()));
         }
-        boardDisabled.set(checkForWin());
+
+        gameBoard.setBoardDisabled(gameBoard.checkForWin());
+        boardDisabled.set(gameBoard.checkForWin());
+
+
+//        var row = Integer.parseInt(buttonId.substring(6, 7));
+//        var col = Integer.parseInt(buttonId.substring(7));
+//        board[row][col].set(getAndThenToggleMarker());
+//
+//        if (!checkForWin()) {
+//            var move = Computer.move(board, gameMode, getMarker());
+//            move.ifPresent(moveRecord -> board[moveRecord.row()][moveRecord.col()].set(getAndThenToggleMarker()));
+//        }
+//        boardDisabled.set(checkForWin());
     }
 
     private String getAndThenToggleMarker() {
@@ -197,4 +219,5 @@ public class TicTacToeModel {
             board[i][2].set("");
         }
     }
+    //endregion
 }

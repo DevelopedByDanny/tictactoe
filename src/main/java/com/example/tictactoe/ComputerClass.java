@@ -2,28 +2,41 @@ package com.example.tictactoe;
 
 import javafx.beans.property.StringProperty;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
-import static com.example.tictactoe.GameMode.*;
-import static com.example.tictactoe.Marker.*;
+import static com.example.tictactoe.GameMode.EASY;
+import static com.example.tictactoe.GameMode.HARD;
+import static com.example.tictactoe.Marker.O;
 
-public class Computer {
-    private int score;
-    private Marker marker;
-    public Computer() {
-        this.score = 0;
-        this.marker = O;
+public class ComputerClass extends Player {
+    private final GameMode gameMode;
+
+    public ComputerClass(GameMode gameMode) {
+        this.gameMode = gameMode;
     }
-//TODO implement player interface in some way
 
+    public ComputerClass() {
+        super(O);
+        this.gameMode = EASY;
+    }
 
-    public static Optional<MoveRecord> move(StringProperty[][] board, GameMode gameMode, String marker) {
+    @Override
+    public MoveRecord makeMove( String string) {
+        return null;
+    }
+    public MoveRecord makeMove( StringProperty[][] board) {
+        return move(board).get();
+    }
+    private Optional<MoveRecord> move(StringProperty[][] board) {
 
-        if (gameMode == EASY) {
+        if (this.gameMode == EASY) {
             return Optional.of(easyMove(board));
         }
         else if (gameMode == HARD) {
-            return Optional.of(miniMax(board, marker));
+            return Optional.of(miniMax(board, this.getMarker().toString()));
         } else {
             return Optional.empty();
         }
@@ -158,7 +171,7 @@ public class Computer {
     }
 
 
-    private static MoveRecord easyMove(StringProperty[][] board) {
+    private MoveRecord easyMove(StringProperty[][] board) {
         Random random = new Random();
         List<MoveRecord> emptySpots = new ArrayList<>();
 
@@ -166,7 +179,7 @@ public class Computer {
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
                 if (board[row][col].get().isEmpty()) {
-                    emptySpots.add(new MoveRecord(row, col));
+                    emptySpots.add(new MoveRecord(row, col, this.getMarker()));
                 }
             }
         }
@@ -178,7 +191,4 @@ public class Computer {
 
         return emptySpots.get(random.nextInt(emptySpots.size())); // Return the chosen move
     }
-
 }
-
-

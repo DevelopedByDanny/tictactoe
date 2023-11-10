@@ -30,16 +30,36 @@ public class TicTacToeController {
         playerTurn.textProperty().bindBidirectional(gameModel.playerTurnProperty());
         score.textProperty().bindBidirectional(gameModel.scoreProperty());
 
-        button00.disableProperty().bindBidirectional(gameModel.boardDisabledProperty());
-        button01.disableProperty().bindBidirectional(gameModel.boardDisabledProperty());
-        button02.disableProperty().bindBidirectional(gameModel.boardDisabledProperty());
-        button10.disableProperty().bindBidirectional(gameModel.boardDisabledProperty());
-        button11.disableProperty().bindBidirectional(gameModel.boardDisabledProperty());
-        button12.disableProperty().bindBidirectional(gameModel.boardDisabledProperty());
-        button20.disableProperty().bindBidirectional(gameModel.boardDisabledProperty());
-        button21.disableProperty().bindBidirectional(gameModel.boardDisabledProperty());
-        button22.disableProperty().bindBidirectional(gameModel.boardDisabledProperty());
+        bindButtonsToDisabledProperty();
+//        bindTheButtonsToBoard();
+        bindTheButtonsToGameBoard();
+    }
 
+    private void bindButtonsToDisabledProperty() {
+        button00.disableProperty().bindBidirectional(gameModel.gameBoard.boardDisabledProperty());
+        button01.disableProperty().bindBidirectional(gameModel.gameBoard.boardDisabledProperty());
+        button02.disableProperty().bindBidirectional(gameModel.gameBoard.boardDisabledProperty());
+        button10.disableProperty().bindBidirectional(gameModel.gameBoard.boardDisabledProperty());
+        button11.disableProperty().bindBidirectional(gameModel.gameBoard.boardDisabledProperty());
+        button12.disableProperty().bindBidirectional(gameModel.gameBoard.boardDisabledProperty());
+        button20.disableProperty().bindBidirectional(gameModel.gameBoard.boardDisabledProperty());
+        button21.disableProperty().bindBidirectional(gameModel.gameBoard.boardDisabledProperty());
+        button22.disableProperty().bindBidirectional(gameModel.gameBoard.boardDisabledProperty());
+    }
+
+    private void bindTheButtonsToGameBoard() {
+        button00.textProperty().bindBidirectional(gameModel.gameBoard.stringProperty(0, 0));
+        button01.textProperty().bindBidirectional(gameModel.gameBoard.stringProperty(0, 1));
+        button02.textProperty().bindBidirectional(gameModel.gameBoard.stringProperty(0, 2));
+        button10.textProperty().bindBidirectional(gameModel.gameBoard.stringProperty(1, 0));
+        button11.textProperty().bindBidirectional(gameModel.gameBoard.stringProperty(1, 1));
+        button12.textProperty().bindBidirectional(gameModel.gameBoard.stringProperty(1, 2));
+        button20.textProperty().bindBidirectional(gameModel.gameBoard.stringProperty(2, 0));
+        button21.textProperty().bindBidirectional(gameModel.gameBoard.stringProperty(2, 1));
+        button22.textProperty().bindBidirectional(gameModel.gameBoard.stringProperty(2, 2));
+    }
+
+    private void bindTheButtonsToBoard() {
         button00.textProperty().bindBidirectional(gameModel.stringProperty(0, 0));
         button01.textProperty().bindBidirectional(gameModel.stringProperty(0, 1));
         button02.textProperty().bindBidirectional(gameModel.stringProperty(0, 2));
@@ -50,6 +70,7 @@ public class TicTacToeController {
         button21.textProperty().bindBidirectional(gameModel.stringProperty(2, 1));
         button22.textProperty().bindBidirectional(gameModel.stringProperty(2, 2));
     }
+
 
     public void onButtonAction(ActionEvent actionEvent) {
         Button button = (Button) actionEvent.getSource();
@@ -68,5 +89,8 @@ public class TicTacToeController {
 
     public void onPlayHardComputer(ActionEvent actionEvent) {
         gameModel.setModeToHard();
+    }
+
+    public void onClickResetMatch(ActionEvent actionEvent) {
     }
 }

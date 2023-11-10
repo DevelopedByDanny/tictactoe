@@ -62,9 +62,14 @@
     </center>
     <right>
         <VBox alignment="CENTER" fx:id="right" spacing="10">
-            <Button text="Start" onAction="#onClickStartGame"/>
-            <Button text="Play vs Easy Computer" onAction="#onPlayEasyComputer"/>
-            <Button text="Play vs Hard Computer" onAction="#onPlayHardComputer"/>
+            <HBox>
+                <Button text="Start" onAction="#onClickStartGame"/>
+                <Button text="End Game" onAction="#onClickResetMatch"/>
+            </HBox>
+            <HBox>
+                <Button text="Easy" onAction="#onPlayEasyComputer"/>
+                <Button text="Hard" onAction="#onPlayHardComputer"/>
+            </HBox>
         </VBox>
     </right>
 

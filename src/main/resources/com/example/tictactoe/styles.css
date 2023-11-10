@@ -25,8 +25,10 @@
 }
 #right .button {
     -fx-alignment:  "CENTER";
-    -fx-font-size: 20;
-    -fx-min-height: 50;
+    -fx-font-size: 16;
+    -fx-min-height: 40;
+    -fx-min-width: 200;
+
 }
 #right {
     -fx-padding: 20;
@@ -36,7 +38,7 @@
 }
 #header {
     -fx-background-color: #a17e7e;
-    -fx-min-height: 200;
+    -fx-min-height: 150;
 }
 #welcomeLabel {
     -fx-font-size: 50;
