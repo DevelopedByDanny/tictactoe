@@ -3,14 +3,9 @@ package com.example.tictactoe;
 import static com.example.tictactoe.Marker.O;
 import static com.example.tictactoe.Marker.X;
 
-public class Player {
-    public void setScore(int score) {
-        this.score = score;
-    }
-
+public abstract class Player {
     private int score;
     private Marker marker;
-
     public Player() {
         this.marker = X;
         this.score = 0;
@@ -21,8 +16,8 @@ public class Player {
         this.score = 0;
     }
 
-    public MoveRecord makeMove(String buttonId) {
-        return MoveRecord.of(buttonId, marker);
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public int incrementScore() {

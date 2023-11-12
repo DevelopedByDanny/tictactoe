@@ -4,26 +4,27 @@ import javafx.beans.property.*;
 
 public class TicTacToeModel {
     //region Fields
-    public final StringProperty welcomeText;
-    private final Player playerOne;
+    GameBoard gameBoard;
+    private final Human playerOne;
     private final ComputerClass playerTwo;
-
+    public final StringProperty welcomeText;
     private final StringProperty winner;
     private final StringProperty playerOneScoreLabel;
     private final StringProperty playerTwoScoreLabel;
-    GameBoard gameBoard;
 
     //endregion
 
+    //region Constructors
     public TicTacToeModel() {
         gameBoard = new GameBoard();
-        playerOne = new Player();
+        playerOne = new Human();
         playerTwo = new ComputerClass();
         playerOneScoreLabel = new SimpleStringProperty("Player X Score: ");
         playerTwoScoreLabel = new SimpleStringProperty("Player O Score: ");
         winner = new SimpleStringProperty("");
         welcomeText = new SimpleStringProperty("Tic Tac Toe");
     }
+    //endregion
 
     //region Getters and Setters
     public StringProperty playerOneScoreLabelProperty() {
@@ -75,7 +76,9 @@ public class TicTacToeModel {
 
         playerOne.setScore(0);
         playerTwo.setScore(0);
-
+        //TODO bind the controller directly to the playerscore
+        setPlayerOneScoreLabel(0);
+        setPlayerTwoScoreLabel(0);
     }
 
     public void placeMarkerOnTheBoard(String buttonId) {

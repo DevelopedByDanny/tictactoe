@@ -1,12 +1,9 @@
 package com.example.tictactoe;
-
 import javafx.beans.property.StringProperty;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-
 import static com.example.tictactoe.GameMode.EASY;
 import static com.example.tictactoe.GameMode.HARD;
 import static com.example.tictactoe.Marker.O;
@@ -19,20 +16,11 @@ public class ComputerClass extends Player {
         this.gameMode = EASY;
     }
 
-    public MoveRecord makeMove( StringProperty[][] board) {
-        return move(board).get();
-    }
 
-    private Optional<MoveRecord> move(StringProperty[][] board) {
-
+    public MoveRecord makeMove(StringProperty[][] board) {
         if (this.gameMode == EASY) {
-            return Optional.of(easyMove(board));
-        }
-        else if (gameMode == HARD) {
-            return Optional.of(miniMax(board, this.getMarker().name()));
-        } else {
-            return Optional.empty();
-        }
+            return easyMove(board);
+        } else return miniMax(board, this.getMarker().name());
     }
 
     private static MoveRecord miniMax(StringProperty[][] board, String aiMarker) {

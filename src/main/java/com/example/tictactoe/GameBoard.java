@@ -27,7 +27,7 @@ public class GameBoard {
 
     public GameBoard() {
         this.boardDisabled = new SimpleBooleanProperty(true);
-        this.board = new SimpleStringProperty[BOARD_SIZE][BOARD_SIZE];
+        this.board = new StringProperty[BOARD_SIZE][BOARD_SIZE];
         this.currentMarker = X;
         initializeBoard();
     }

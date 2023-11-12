@@ -27,7 +27,9 @@ public class TicTacToeController {
     public void initialize() {
         welcomeLabel.textProperty().bindBidirectional(gameModel.welcomeTextProperty());
         winner.textProperty().bindBidirectional(gameModel.winnerProperty());
+//        playerOneScore.textProperty().bindBidirectional(gameModel.playerOneScoreLabelProperty());
         playerOneScore.textProperty().bindBidirectional(gameModel.playerOneScoreLabelProperty());
+//        playerTwoScore.textProperty().bindBidirectional(gameModel.playerTwoScoreLabelProperty());
         playerTwoScore.textProperty().bindBidirectional(gameModel.playerTwoScoreLabelProperty());
 
         bindButtonsToDisabledProperty();
