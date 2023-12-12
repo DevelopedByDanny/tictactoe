@@ -6,7 +6,7 @@ public class TicTacToeModel {
     //region Fields
     GameBoard gameBoard;
     private final Human playerOne;
-    private final ComputerClass playerTwo;
+    private final Computer playerTwo;
     public final StringProperty welcomeText;
     private final StringProperty winner;
     private final StringProperty playerOneScoreLabel;
@@ -18,7 +18,7 @@ public class TicTacToeModel {
     public TicTacToeModel() {
         gameBoard = new GameBoard();
         playerOne = new Human();
-        playerTwo = new ComputerClass();
+        playerTwo = new Computer();
         playerOneScoreLabel = new SimpleStringProperty("Player X Score: ");
         playerTwoScoreLabel = new SimpleStringProperty("Player O Score: ");
         winner = new SimpleStringProperty("");
